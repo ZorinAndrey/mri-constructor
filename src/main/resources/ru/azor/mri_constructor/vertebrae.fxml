@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.azor.mri_constructor.VertebraeController">
+    <children>
+        <VBox alignment="CENTER" spacing="20.0" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+
+            <Label text="Позвонки" />
+         <HBox alignment="CENTER">
+            <children>
+               <RadioButton fx:id="norm" mnemonicParsing="false" onAction="#selectNorm" text="Норма">
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+               </RadioButton>
+               <RadioButton fx:id="deviation" mnemonicParsing="false" onAction="#selectDeviation" text="Отклонение" />
+            </children>
+         </HBox>
+         <VBox fx:id="deviationBox">
+            <children>
+               <CheckBox fx:id="sizeReduction" mnemonicParsing="false" onAction="#selectSizeReduction" text="Снижение размера">
+                  <VBox.margin>
+                     <Insets bottom="20.0" />
+                  </VBox.margin>
+               </CheckBox>
+               <CheckBox fx:id="wedgeDeformity" mnemonicParsing="false" onAction="#selectWedgeDeformity" text="Клиновидная деформация" />
+               <VBox fx:id="wedgeDeformityBox" prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                     <HBox>
+                        <children>
+                           <Label text="Локализация" />
+                           <CheckBox fx:id="d0" mnemonicParsing="false" text="C0" />
+                           <CheckBox fx:id="d1" mnemonicParsing="false" text="C1" />
+                           <CheckBox fx:id="d2" mnemonicParsing="false" text="C2" />
+                           <CheckBox fx:id="d3" mnemonicParsing="false" text="C3" />
+                           <CheckBox fx:id="d4" mnemonicParsing="false" text="C4" />
+                           <CheckBox fx:id="d5" mnemonicParsing="false" text="C5" />
+                           <CheckBox fx:id="d6" mnemonicParsing="false" text="C6" />
+                           <CheckBox fx:id="d7" mnemonicParsing="false" text="C7" />
+                           <CheckBox fx:id="d8" mnemonicParsing="false" text="Th1" />
+                        </children>
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                     </HBox>
+                     <TextArea fx:id="wedgeDeformityTextArea">
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                     </TextArea>
+                  </children>
+                  <VBox.margin>
+                     <Insets bottom="20.0" />
+                  </VBox.margin>
+               </VBox>
+               <CheckBox fx:id="rearContour" mnemonicParsing="false" onAction="#selectRearContour" text="Задний контур" />
+               <VBox fx:id="rearContourBox">
+                  <children>
+                     <HBox>
+                        <children>
+                           <Label text="Локализация" />
+                           <CheckBox fx:id="r0" mnemonicParsing="false" text="C0" />
+                           <CheckBox fx:id="r1" mnemonicParsing="false" text="C1" />
+                           <CheckBox fx:id="r2" mnemonicParsing="false" text="C2" />
+                           <CheckBox fx:id="r3" mnemonicParsing="false" text="C3" />
+                           <CheckBox fx:id="r4" mnemonicParsing="false" text="C4" />
+                           <CheckBox fx:id="r5" mnemonicParsing="false" text="C5" />
+                           <CheckBox fx:id="r6" mnemonicParsing="false" text="C6" />
+                           <CheckBox fx:id="r7" mnemonicParsing="false" text="C7" />
+                           <CheckBox fx:id="r8" mnemonicParsing="false" text="Th1" />
+                        </children>
+                     </HBox>
+                     <TextArea fx:id="rearContourTextArea" />
+                  </children>
+               </VBox>
+            </children>
+         </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                <children>
+                    <Button onAction="#prevWindow" text="&lt;&lt;" />
+                    <Button onAction="#nextWindow" text="&gt;&gt;" />
+                </children>
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Label text="Прогресс:">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Label>
+                <Label fx:id="lordosisLabel" layoutX="10.0" layoutY="45.0" />
+                <Label fx:id="axisLabel" layoutX="10.0" layoutY="45.0" />
+                <Label fx:id="sagittalLabel" layoutX="30.0" layoutY="105.0" />
+                <Label fx:id="spondylodiscitisLabel" layoutX="30.0" layoutY="143.0" />
+            <Label fx:id="vertebraeLabel" layoutX="30.0" layoutY="180.0" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </children>
+</HBox>

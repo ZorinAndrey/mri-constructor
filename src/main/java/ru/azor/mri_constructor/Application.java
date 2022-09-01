@@ -7,133 +7,126 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import ru.azor.mri_constructor.entities.MRIStudy;
-import ru.azor.mri_constructor.services.DBService;
+import ru.azor.mri_constructor.entities.Spondylodiscitis;
+import ru.azor.mri_constructor.entities.Vertebrae;
+import ru.azor.mri_constructor.enums.Axis;
+import ru.azor.mri_constructor.enums.Lordosis;
+import ru.azor.mri_constructor.enums.SagittalSize;
 
 import java.io.IOException;
+import java.util.List;
 
 @Getter
 @Setter
 public class Application extends javafx.application.Application {
 
     public static Application INSTANCE;
-    private static final String INIT_FXML = "init.fxml";
-    private static final String FIRST_FXML = "first.fxml";
-    private static final String SECOND_FXML = "second.fxml";
-    private static final String THIRD_FXML = "final.fxml";
-    private Stage initStage;
-    private Stage firstStage;
-    private Stage secondStage;
-    private Stage thirdStage;
-    private FXMLLoader initLoader;
-    private FXMLLoader firstLoader;
-    private FXMLLoader secondLoader;
-    private FXMLLoader thirdLoader;
+    private static final String STATICS_FXML = "statics.fxml";
+    private static final String SPONDYLODISCITIS_FXML = "spondylodiscitis.fxml";
+    private static final String VERTEBRAE_FXML = "vertebrae.fxml";
+    private static final String FINAL_FXML = "final.fxml";
+    private Stage staticsStage;
+    private Stage spondylodiscitisStage;
+    private Stage vertebraeStage;
+    private Stage finalStage;
+    private FXMLLoader staticsLoader;
+    private FXMLLoader spondylodiscitisLoader;
+    private FXMLLoader vertebraeLoader;
+    private FXMLLoader finalLoader;
     private Parent root;
     private MRIStudy study;
-    private DBService dbService;
 
     @Override
     public void init() {
         INSTANCE = this;
         study = new MRIStudy();
-        dbService = new DBService();
+        study.setLordosis(Lordosis.NORM);
+        study.setAxis(Axis.NORM);
+        study.setSagittalSize(SagittalSize.NORM);
+        study.setSpondylodiscitis(new Spondylodiscitis("Норма"));
+        study.setVertebrae(new Vertebrae(List.of("Норма")));
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        initStage = stage;
-        initInitWindow();
+        staticsStage = stage;
+        initStaticsWindow();
     }
 
-    @Override
-    public void stop() throws Exception {
-        dbService.closeConnection();
-        super.stop();
-    }
-
-    void initInitWindow() throws IOException {
-        initLoader = new FXMLLoader();
-        initLoader.setLocation(getClass().getResource(INIT_FXML));
-        root = initLoader.load();
-        if (!initStage.isShowing()) {
-            initStage = new Stage();
+    void initStaticsWindow() throws IOException {
+        staticsLoader = new FXMLLoader();
+        staticsLoader.setLocation(getClass().getResource(STATICS_FXML));
+        root = staticsLoader.load();
+        if (!staticsStage.isShowing()) {
+            staticsStage = new Stage();
         }
-        initStage.setScene(new Scene(root));
-        initStage.setTitle("Пациент");
-        initStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
-        initStage.setOnCloseRequest(we -> {
+        staticsStage.setScene(new Scene(root));
+        staticsStage.setTitle("Статика отдела");
+        staticsStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
+        staticsStage.setOnCloseRequest(we -> {
 
         });
-        initStage.show();
-        if (firstStage != null && firstStage.isShowing()) {
-            firstStage.close();
+        staticsStage.show();
+        if (spondylodiscitisStage != null && spondylodiscitisStage.isShowing()) {
+            spondylodiscitisStage.close();
         }
     }
 
-    void initFirstWindow() throws IOException {
-        firstLoader = new FXMLLoader();
-        firstLoader.setLocation(getClass().getResource(FIRST_FXML));
-        root = firstLoader.load();
-        firstStage = new Stage();
-        firstStage.setScene(new Scene(root));
-        firstStage.setTitle("Статика");
-        firstStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
-        firstStage.setOnCloseRequest(we -> {
+    void initSpondylodiscitisWindow() throws IOException {
+        spondylodiscitisLoader = new FXMLLoader();
+        spondylodiscitisLoader.setLocation(getClass().getResource(SPONDYLODISCITIS_FXML));
+        root = spondylodiscitisLoader.load();
+        spondylodiscitisStage = new Stage();
+        spondylodiscitisStage.setScene(new Scene(root));
+        spondylodiscitisStage.setTitle("Спондилодисцит");
+        spondylodiscitisStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
+        spondylodiscitisStage.setOnCloseRequest(we -> {
 
         });
-        firstStage.show();
-        if (initStage != null && initStage.isShowing()) {
-            initStage.close();
+        spondylodiscitisStage.show();
+        if (staticsStage != null && staticsStage.isShowing()) {
+            staticsStage.close();
         }
-        if (secondStage != null && secondStage.isShowing()) {
-            secondStage.close();
-        }
-        if (thirdStage != null && thirdStage.isShowing()) {
-            thirdStage.close();
+        if (vertebraeStage != null && vertebraeStage.isShowing()) {
+            vertebraeStage.close();
         }
     }
 
-    void initSecondWindow() throws IOException {
-        secondLoader = new FXMLLoader();
-        secondLoader.setLocation(getClass().getResource(SECOND_FXML));
-        root = secondLoader.load();
-        secondStage = new Stage();
-        secondStage.setScene(new Scene(root));
-        secondStage.setTitle("Сколиоз");
-        secondStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
-        secondStage.setOnCloseRequest(we -> {
+    void initVertebraeWindow() throws IOException {
+        vertebraeLoader = new FXMLLoader();
+        vertebraeLoader.setLocation(getClass().getResource(VERTEBRAE_FXML));
+        root = vertebraeLoader.load();
+        vertebraeStage = new Stage();
+        vertebraeStage.setScene(new Scene(root));
+        vertebraeStage.setTitle("Позвонки");
+        vertebraeStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
+        vertebraeStage.setOnCloseRequest(we -> {
 
         });
-        secondStage.show();
-        if (firstStage != null && firstStage.isShowing()) {
-            firstStage.close();
+        vertebraeStage.show();
+        if (spondylodiscitisStage != null && spondylodiscitisStage.isShowing()) {
+            spondylodiscitisStage.close();
         }
-        if (thirdStage != null && thirdStage.isShowing()) {
-            thirdStage.close();
+        if (finalStage != null && finalStage.isShowing()) {
+            finalStage.close();
         }
     }
 
-    void initThirdWindow() throws IOException {
-        thirdLoader = new FXMLLoader();
-        thirdLoader.setLocation(getClass().getResource(THIRD_FXML));
-        root = thirdLoader.load();
-        thirdStage = new Stage();
-        thirdStage.setScene(new Scene(root));
-        thirdStage.setTitle("Third");
-        thirdStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
-        thirdStage.setOnCloseRequest(we -> {
+    void initFinalWindow() throws IOException {
+        finalLoader = new FXMLLoader();
+        finalLoader.setLocation(getClass().getResource(FINAL_FXML));
+        root = finalLoader.load();
+        finalStage = new Stage();
+        finalStage.setScene(new Scene(root));
+        finalStage.setTitle("Final");
+        finalStage.getScene().getStylesheets().add(getClass().getResource("style/sky.css").toString());
+        finalStage.setOnCloseRequest(we -> {
 
         });
-        thirdStage.show();
-        if (firstStage != null && firstStage.isShowing()) {
-            firstStage.close();
+        finalStage.show();
+        if (vertebraeStage != null && vertebraeStage.isShowing()) {
+            vertebraeStage.close();
         }
-        if (secondStage != null && secondStage.isShowing()) {
-            secondStage.close();
-        }
-//        if (fourthStage != null && fourthStage.isShowing()){
-//            fourthStage.close();
-//        }
     }
 
     public static void main(String[] args) {

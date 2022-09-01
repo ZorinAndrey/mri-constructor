@@ -11,50 +11,44 @@ import java.util.ResourceBundle;
 
 public class FinalController implements Initializable {
     @FXML
+    public Label sagittalLabel;
+    @FXML
+    public Label spondylodiscitisLabel;
+    public Label vertebraeLabel;
+    @FXML
     private Label label;
     @FXML
-    public Label fullNameLabel;
+    public Label axisLabel;
     @FXML
-    public Label dateOfBirthLabel;
-    @FXML
-    public Label scoliosisTypeLabel;
-    @FXML
-    public Label bendingAngleLabel;
-    @FXML
-    public Label apexOfTheBendLabel;
-
+    public Label lordosisLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fullNameLabel.setText("Ф.И.О.: " + Application.INSTANCE.getStudy().getFullName());
-        dateOfBirthLabel.setText("Дата рождения: " + Application.INSTANCE.getStudy().getDateOfBirth());
-        if (Application.INSTANCE.getStudy().getScoliosisType() != null) {
-            scoliosisTypeLabel.setText("Сколиоз: " + Application.INSTANCE.getStudy().getScoliosisType().getRus());
-            bendingAngleLabel.setText("Угол изгиба: " + Application.INSTANCE.getStudy().getBendingAngle() + " градусов");
-            apexOfTheBendLabel.setText("Вершина изгиба на " + Application.INSTANCE.getStudy().getApexOfTheBend() + "-м позвонке");
-        } else {
-            scoliosisTypeLabel.setText("Сколиоз: нет");
+        lordosisLabel.setText("Лордоз: " + Application.INSTANCE.getStudy().getLordosis().getState());
+        axisLabel.setText("Ось: " + Application.INSTANCE.getStudy().getAxis().getState());
+        sagittalLabel.setText("Сагиттальный размер: " + Application.INSTANCE.getStudy().getSagittalSize().getState());
+        if (! Application.INSTANCE.getStudy().getSpondylodiscitis().getState().equals("Норма")){
+            spondylodiscitisLabel.setText("Спондилодисцит: присутствует");
+        }else {
+            spondylodiscitisLabel.setText("Спондилодисцит: отсутствует");
+        }
+        if (!Application.INSTANCE.getStudy().getVertebrae().getState().get(0).equals("Норма")) {
+            vertebraeLabel.setText("Позвонки: " + String.join(",\n", Application.INSTANCE.getStudy().getVertebrae().getState()));
+        }else {
+            vertebraeLabel.setText("Позвонки: физиологической конфигурации");
         }
     }
 
     @FXML
     protected void prevWindow() throws IOException {
         label.setText("");
-        if (Application.INSTANCE.getStudy().getScoliosisType() == null) {
-            Application.INSTANCE.initFirstWindow();
-        } else {
-            Application.INSTANCE.initSecondWindow();
-        }
+        Application.INSTANCE.initVertebraeWindow();
     }
 
     @FXML
     public void addNewStudy() {
-        if (Application.INSTANCE.getStudy().getId() == 0) {
-            Application.INSTANCE.setStudy(Application.INSTANCE.getDbService().addNewStudy(Application.INSTANCE.getStudy()));
-        } else {
-            Application.INSTANCE.getDbService().updateStudy(Application.INSTANCE.getStudy());
-        }
         DocumentUtil.createDocument();
         label.setText("Готово");
+        System.out.println(Application.INSTANCE.getStudy());
     }
 }
